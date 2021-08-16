@@ -17,7 +17,20 @@ namespace PostgresTraining.Tests
         private IDbContextTransaction _transaction;
         private DbContextOptionsBuilder _builder;
 
-        public void OneTimeSetUp()
+        //public void OneTimeSetUp()
+        //{
+        //    _connection = new NpgsqlConnection(ConnectionString.TestDatabase());
+        //    _connection.Open();
+        //    var npgsqlCommand = _connection.CreateCommand();
+        //    npgsqlCommand.CommandText = "SET deadlock_timeout TO 30";
+        //    npgsqlCommand.ExecuteNonQuery();
+
+        //    _builder = new DbContextOptionsBuilder();
+        //    _builder.UseNpgsql(_connection);
+
+        //}
+
+        public IntegrationTests()
         {
             _connection = new NpgsqlConnection(ConnectionString.TestDatabase());
             _connection.Open();
@@ -28,10 +41,6 @@ namespace PostgresTraining.Tests
             _builder = new DbContextOptionsBuilder();
             _builder.UseNpgsql(_connection);
 
-        }
-
-        public IntegrationTests()
-        {
             _factory = new MockWebApplicationFactory<TStartup>(_connection);
             Client = _factory.CreateClient();
             DatabaseContext = new DatabaseContext(_builder.Options);

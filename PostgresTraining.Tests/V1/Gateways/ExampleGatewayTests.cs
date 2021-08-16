@@ -8,6 +8,7 @@ using PostgresTraining.V1.Factories;
 using Xunit;
 using PostgresTraining.V1.Infrastructure;
 using PostgresTraining.V1.Boundary.Request;
+using System;
 
 namespace PostgresTraining.Tests.V1.Gateways
 {

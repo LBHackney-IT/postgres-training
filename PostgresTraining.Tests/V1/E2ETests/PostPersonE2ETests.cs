@@ -13,7 +13,7 @@ using Xunit;
 
 namespace PostgresTraining.Tests.V1.E2ETests
 {
-    [Collection("IntegrationTests")]
+    [Collection("Integration collection")]
 
     public class PostPersonE2ETests : IntegrationTests<Startup>
     {

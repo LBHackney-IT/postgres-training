@@ -8,7 +8,7 @@ using Xunit;
 
 namespace PostgresTraining.Tests.V1.E2ETests
 {
-    [Collection("IntegrationTests")]
+    [Collection("Integration collection")]
     public class GetByIdE2ETests : IntegrationTests<Startup>
     {
         private IFixture _fixture;
@@ -36,7 +36,7 @@ namespace PostgresTraining.Tests.V1.E2ETests
         }
 
         [Fact]
-        public void GetResidentByIdReturns404IfNotFound()
+        public void GetResidentByIdReturns404IfNotFoundAsync()
         {
             var uri = new Uri($"api/v1/residents/1234", UriKind.Relative);
             var response = Client.GetAsync(uri);

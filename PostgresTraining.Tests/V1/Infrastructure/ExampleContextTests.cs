@@ -1,5 +1,5 @@
-using System.Linq;
 using PostgresTraining.Tests.V1.Helper;
+using System.Linq;
 using Xunit;
 
 namespace PostgresTraining.Tests.V1.Infrastructure
@@ -16,7 +16,7 @@ namespace PostgresTraining.Tests.V1.Infrastructure
 
             var result = DatabaseContext.Persons.ToList().FirstOrDefault();
 
-            //Assert.AreEqual(result, databaseEntity);
+            Assert.Equal(result, databaseEntity);
         }
     }
 }
