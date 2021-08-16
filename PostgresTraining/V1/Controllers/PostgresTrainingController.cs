@@ -43,10 +43,10 @@ namespace PostgresTraining.V1.Controllers
         [HttpPost]
         public IActionResult CreatePersonRecord([FromBody] PersonRequestObject createPersonRequestObject)
         {
-            
-                var person = _createPersonUseCase.Execute(createPersonRequestObject);
-                return CreatedAtAction("ViewRecord", person);
-            
+
+            var person = _createPersonUseCase.Execute(createPersonRequestObject);
+            return CreatedAtAction("ViewRecord", person);
+
         }
 
         /// <summary>

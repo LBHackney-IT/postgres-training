@@ -65,7 +65,7 @@ namespace PostgresTraining.Tests.V1.Gateways
             DatabaseContext.SaveChanges();
 
             entity.FirstName = "Test";
-            
+
             var person = _classUnderTest.UpdatePerson(entity);
 
             person.FirstName.Should().Be(entity.FirstName);

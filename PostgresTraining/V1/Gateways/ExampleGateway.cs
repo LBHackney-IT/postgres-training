@@ -44,10 +44,10 @@ namespace PostgresTraining.V1.Gateways
 
         public Person UpdatePerson(Person person)
         {
-           var result = _databaseContext.Persons.Find(person.Id);
-           if (result == null) return null;
+            var result = _databaseContext.Persons.Find(person.Id);
+            if (result == null) return null;
             result = person.ToDatabase();
-            
+
             _databaseContext.SaveChanges();
 
             return result.ToDomain();

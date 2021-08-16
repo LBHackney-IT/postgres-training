@@ -32,7 +32,7 @@ namespace PostgresTraining.V1.Factories
                 DateOfBirth = person.DateOfBirth,
                 FirstName = person.FirstName,
                 Id = person.Id,
-                MiddleName =person.MiddleName,
+                MiddleName = person.MiddleName,
                 PlaceOfBirth = person.PlaceOfBirth,
                 Surname = person.Surname,
                 Title = person.Title
