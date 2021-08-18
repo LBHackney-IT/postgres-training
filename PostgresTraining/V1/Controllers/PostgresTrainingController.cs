@@ -29,10 +29,12 @@ namespace PostgresTraining.V1.Controllers
         /// <response code="404">No person found for the specified ID</response>
         [ProducesResponseType(typeof(ResponseObject), StatusCodes.Status200OK)]
         [HttpGet]
-        [Route("{Id}")]
-        public IActionResult ViewRecord(int yourId)
+        [Route("{id}")]
+        public IActionResult ViewRecord(int id)
         {
-            return Ok(_getByIdUseCase.Execute(yourId));
+            var response = _getByIdUseCase.Execute(id);
+            if (response == null) return NotFound();
+            return Ok(response);
         }
 
         /// <summary>

@@ -15,7 +15,7 @@ namespace PostgresTraining.Tests.V1.E2ETests
         {
             var person = TestHelper.CreateDatabasePersonEntity(id);
             context.Persons.Add(person.ToDatabase());
-            context.SaveChanges();
+            var i = context.SaveChanges();
 
             return new PersonEntity
             {

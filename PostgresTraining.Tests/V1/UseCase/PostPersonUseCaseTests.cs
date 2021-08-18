@@ -33,7 +33,7 @@ namespace PostgresTraining.Tests.V1.UseCase
             {
                 DateOfBirth = request.DateOfBirth,
                 FirstName = request.FirstName,
-                Id = request.Id,
+                Id = (int) (request?.Id),
                 MiddleName = request.MiddleName,
                 PlaceOfBirth = request.PlaceOfBirth,
                 Surname = request.Surname,

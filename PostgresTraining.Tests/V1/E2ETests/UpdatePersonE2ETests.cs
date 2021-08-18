@@ -22,26 +22,25 @@ namespace PostgresTraining.Tests.V1.E2ETests
         }
 
         [Fact]
-        public void PostPersonReturnCorrectResponse()
+        public async Task UpdatePersonReturnCorrectResponse()
         {
             var id = _fixture.Create<int>();
             var expectedResponse = E2ETestHelpers.AddPersonToDb(DatabaseContext, id);
-
-            var uri = new Uri($"api/v1/residents/", UriKind.Relative);
+            var uri = new Uri($"api/v1/residents", UriKind.Relative);
             var content = new StringContent(JsonConvert.SerializeObject(expectedResponse), Encoding.UTF8, "application/json");
 
-            var response = Client.PostAsync(uri, content);
-            response.Result.StatusCode.Should().Be(204);
+            var response = await _client.PatchAsync(uri, content).ConfigureAwait(false);
+            response.StatusCode.Should().Be(204);
 
         }
 
         [Fact]
-        public void PostPersonReturnsBadRequest()
+        public async Task UpdatePersonReturnsBadRequest()
         {
-            var uri = new Uri($"api/v1/residents/", UriKind.Relative);
+            var uri = new Uri($"api/v1/residents", UriKind.Relative);
             var content = new StringContent(JsonConvert.SerializeObject(null), Encoding.UTF8, "application/json");
-            var response = Client.PostAsync(uri, content);
-            response.Result.StatusCode.Should().Be(404);
+            var response = await _client.PatchAsync(uri, content).ConfigureAwait(false);
+            response.StatusCode.Should().Be(400);
         }
 
 

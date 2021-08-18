@@ -24,21 +24,21 @@ namespace PostgresTraining.V1.Gateways
 
         public Person AddPerson(Person person)
         {
-            var newPerson = new Person
-            {
-                DateOfBirth = person.DateOfBirth,
-                FirstName = person.FirstName,
-                Id = person.Id,
-                MiddleName = person.MiddleName,
-                PlaceOfBirth = person.PlaceOfBirth,
-                Surname = person.Surname,
-                Title = person.Title
-            };
-
-            _databaseContext.Persons.Add(newPerson.ToDatabase());
+            //var newPerson = new Person
+            //{
+            //    DateOfBirth = person.DateOfBirth,
+            //    FirstName = person.FirstName,
+            //    Id = person.Id,
+            //    MiddleName = person.MiddleName,
+            //    PlaceOfBirth = person.PlaceOfBirth,
+            //    Surname = person.Surname,
+            //    Title = person.Title
+            //};
+            var dbEntity = person.ToDatabase();
+            _databaseContext.Persons.Add(dbEntity);
             _databaseContext.SaveChanges();
 
-            return newPerson;
+            return person;
 
         }
 

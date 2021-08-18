@@ -155,6 +155,8 @@ namespace PostgresTraining
         private static void RegisterUseCases(IServiceCollection services)
         {
             services.AddScoped<IGetByIdUseCase, GetByIdUseCase>();
+            services.AddScoped<IPostPersonUseCase, PostPersonUseCase>();
+            services.AddScoped<IUpdatePersonUseCase, UpdatePersonUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

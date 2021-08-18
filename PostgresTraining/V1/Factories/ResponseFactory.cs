@@ -10,6 +10,7 @@ namespace PostgresTraining.V1.Factories
     {
         public static ResponseObject ToResponse(this Person domain)
         {
+            if (domain == null) return null;
             return new ResponseObject()
             {
 

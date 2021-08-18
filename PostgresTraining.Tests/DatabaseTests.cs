@@ -31,8 +31,11 @@ namespace PostgresTraining.Tests
         {
             if (disposing && !_disposed)
             {
-                if (null != _transaction)
+                if (_transaction != null)
+                {
+                    _transaction.Rollback();
                     _transaction.Dispose();
+                }
                 _disposed = true;
             }
         }

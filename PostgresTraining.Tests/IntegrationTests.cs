@@ -1,34 +1,22 @@
 using System.Net.Http;
 using PostgresTraining.V1.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
+using System.Data;
 
 namespace PostgresTraining.Tests
 {
     public class IntegrationTests<TStartup> where TStartup : class
     {
-        protected HttpClient Client { get; private set; }
+        protected HttpClient _client { get; private set; }
         protected DatabaseContext DatabaseContext { get; private set; }
 
         private MockWebApplicationFactory<TStartup> _factory;
         private NpgsqlConnection _connection;
-        private IDbContextTransaction _transaction;
+        private NpgsqlTransaction _transaction;
         private DbContextOptionsBuilder _builder;
-
-        //public void OneTimeSetUp()
-        //{
-        //    _connection = new NpgsqlConnection(ConnectionString.TestDatabase());
-        //    _connection.Open();
-        //    var npgsqlCommand = _connection.CreateCommand();
-        //    npgsqlCommand.CommandText = "SET deadlock_timeout TO 30";
-        //    npgsqlCommand.ExecuteNonQuery();
-
-        //    _builder = new DbContextOptionsBuilder();
-        //    _builder.UseNpgsql(_connection);
-
-        //}
 
         public IntegrationTests()
         {
@@ -42,10 +30,11 @@ namespace PostgresTraining.Tests
             _builder.UseNpgsql(_connection);
 
             _factory = new MockWebApplicationFactory<TStartup>(_connection);
-            Client = _factory.CreateClient();
-            DatabaseContext = new DatabaseContext(_builder.Options);
-            DatabaseContext.Database.EnsureCreated();
-            _transaction = DatabaseContext.Database.BeginTransaction();
+            _client = _factory.CreateClient();
+            DatabaseContext = _factory.Server.Host.Services.GetRequiredService<DatabaseContext>();
+
+            _transaction = _connection.BeginTransaction(IsolationLevel.RepeatableRead);
+            DatabaseContext.Database.UseTransaction(_transaction);
         }
 
         public void Dispose()
@@ -58,18 +47,24 @@ namespace PostgresTraining.Tests
         {
             if (disposing && !_disposed)
             {
-                if (null != _transaction)
+                _disposed = true;
+                if (_transaction != null)
+                {
+                    _transaction.Rollback();
                     _transaction.Dispose();
-                _disposed = true;
+                }
 
-                if (null != _factory)
+                if (_factory != null)
                     _factory.Dispose();
-                _disposed = true;
 
-                if (null != Client)
-                    Client.Dispose();
-                _disposed = true;
+                if (_client != null)
+                    _client.Dispose();
+
+                if (_connection != null)
+                    _connection.Dispose();
+
             }
+
         }
     }
     [CollectionDefinition("Integration collection", DisableParallelization = true)]
