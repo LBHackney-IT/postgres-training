@@ -31,7 +31,7 @@ terraform {
     bucket  = "terraform-state-housing-development"
     encrypt = true
     region  = "eu-west-2"
-    key     = services/postgres-training-api/state
+    key     = services/training-api/state
   }
 }
 
