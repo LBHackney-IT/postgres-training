@@ -33,7 +33,7 @@ services:
     links:
       - test-database
 
-   test-database:
+  test-database:
     image: postgres:12
     ports:
       - 5432:5432
