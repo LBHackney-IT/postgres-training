@@ -34,6 +34,19 @@ terraform {
     key     = services/training-api/state
   }
 }
+/*    POSTGRES SET UP    */
+data "aws_vpc" "development_vpc" {
+  tags = {
+    Name = "vpc-development-apis-development"
+  }
+}
+data "aws_subnet_ids" "development_private_subnets" {
+  vpc_id = data.aws_vpc.development_vpc.id
+  filter {
+    name   = "tag:Type"
+    values = ["private"]
+  }
+}
 
 module "postgres_db_development" {
   source = "github.com/LBHackney-IT/aws-hackney-common-terraform.git//modules/database/postgres"
