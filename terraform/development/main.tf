@@ -28,12 +28,13 @@ data "aws_iam_role" "ecs_task_execution_role" {
 
 terraform {
   backend "s3" {
-    bucket  = "terraform-state-housing-development"
+    bucket  = "terraform-state-development-apis"
     encrypt = true
     region  = "eu-west-2"
-    key     = services/training-api/state
+    key     = services/YOUR API NAME/state #e.g. "services/transactions-api/state"
   }
 }
+
 /*    POSTGRES SET UP    */
 data "aws_vpc" "development_vpc" {
   tags = {
