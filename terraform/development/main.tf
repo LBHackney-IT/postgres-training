@@ -31,7 +31,7 @@ terraform {
     bucket  = "terraform-state-development-apis"
     encrypt = true
     region  = "eu-west-2"
-    key     = services/postgrestraining/state
+    key     = "services/postgres-training/state"
   }
 }
 
