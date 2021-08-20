@@ -50,7 +50,7 @@ data "aws_subnet_ids" "development_private_subnets" {
 }
 
 module "postgres_db_development" {
-  source = "github.com/LBHackney-IT/aws-hackney-common-terraform.git//modules/database/postgres"
+  source = "github.com/LBHackney-IT/aws-hackney-common-terraform.git/modules/database/postgres"
   environment_name = "development"
   vpc_id = data.aws_vpc.development_vpc.id
   db_engine = "postgres"
