@@ -9,6 +9,14 @@ provider:
   vpc: ${self:custom.vpc.${opt:stage}}
   stage: ${opt:stage}
   region: eu-west-2
+  apiKeys:
+    - secureAccess:
+      - api-key-${self:service}-${self:provider.stage}
+  usagePlan:
+    - secureAccess:
+        throttle:
+          burstLimit: 200
+          rateLimit: 100
  
 
 package:
@@ -53,7 +61,6 @@ resources:
               Action: sts:AssumeRole
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
-          - arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
         Policies:
           - PolicyName: manageLogs
             PolicyDocument:
