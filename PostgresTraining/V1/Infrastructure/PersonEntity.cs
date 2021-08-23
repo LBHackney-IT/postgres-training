@@ -25,7 +25,7 @@ namespace PostgresTraining.V1.Infrastructure
         public string Surname { get; set; }
 
         [Column("title")]
-        public Title Title { get; set; }
+        public Title? Title { get; set; }
 
         [Column("place_of_birth", TypeName = "varchar")]
         [MaxLength(45)]
