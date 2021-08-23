@@ -26,10 +26,24 @@ terraform {
   }
 }
 
+/*    POSTGRES SET UP    */
+data "aws_vpc" "development_vpc" {
+  tags = {
+       Name = "vpc-development-apis-development"
+  }
+}
+data "aws_subnet_ids" "development_private_subnets" {
+ vpc_id = data.aws_vpc.development_vpc.id
+ filter {
+   name   = "tag:Type"
+   values = ["private"]
+  }
+}
+
 module "postgres_db_development" {
   source = "github.com/LBHackney-IT/aws-hackney-common-terraform.git/modules/database/postgres"
   environment_name = "development"
-  vpc_id = data.aws_vpc.development_vpc.id
+  vpc_id = data.aws_subnet_ids.vpc_id
   db_engine = "postgres"
   db_engine_version = "11.1"
   db_identifier = "postgres-training-dev-db"
