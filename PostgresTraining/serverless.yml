@@ -20,7 +20,7 @@ functions:
     handler: PostgresTraining::PostgresTraining.LambdaEntryPoint::FunctionHandlerAsync
     role: lambdaExecutionRole
     environment:
-      CONNECTION_STRING: Host=${ssm:/postgres-training-api/${self:provider.stage}/postgres-hostname};Port=${ssm:/postgres-training-api/${self:provider.stage}/postgres-port};Database=postgres-training-api-mirror;Username=${ssm:/postgres-training-api/${self:provider.stage}/postgres-username};Password=${ssm:/postgres-training-api/${self:provider.stage}/postgres-password}
+      CONNECTION_STRING: Host=test-database;Port=5432;Username=postgres;Password=mypassword
     events:
       - http:
           path: /{proxy+}
