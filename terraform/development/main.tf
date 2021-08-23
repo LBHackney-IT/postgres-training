@@ -26,37 +26,4 @@ terraform {
   }
 }
 
-/*    POSTGRES SET UP    */
-data "vpc" "development_vpc" {
-  tags = {
-       Name = "vpc-development-apis-development"
-  }
-}
-data "aws_subnet_ids" "development_private_subnets" {
- vpc_id = data.vpc.development_vpc.id
- filter {
-   name   = "tag:Type"
-   values = ["private"]
-  }
-}
 
-module "postgres_db_development" {
-  source = "github.com/LBHackney-IT/aws-hackney-common-terraform.git/modules/database/postgres"
-  environment_name = "development"
-  vpc_id = data.aws_subnet_ids.development_private_subnets.vpc_id
-  db_engine = "postgres"
-  db_engine_version = "11.1"
-  db_identifier = "postgres-training-dev-db"
-  db_instance_class = "db.t2.micro"
-  db_name = "postgres-training-dev"
-  db_port  = 5002
-  db_username = "${local.parameter_store}/postgres-training-api/development/postgres-username"
-  db_password = "${local.parameter_store}/postgres-training-api/development/postgres-password"
-  subnet_ids = data.aws_subnet_ids.development_private_subnets.ids
-  db_allocated_storage = 20
-  maintenance_window ="sun:10:00-sun:10:30"
-  storage_encrypted = false
-  multi_az = false //only true if production deployment
-  publicly_accessible = false
-  project_name = "platform apis"
-}
